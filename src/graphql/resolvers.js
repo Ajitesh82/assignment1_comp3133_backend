@@ -3,43 +3,43 @@ const Employee = require('../models/Employee');
 
 const resolvers = {
   Query: {
-    getAllEmployees: async () => {
+    fetchAllEmployees: async () => {
       const employees = await Employee.find();
       return employees.map(employee => ({
         id: employee._id.toString(),
         ...employee._doc,
       }));
     },
-    searchEmployeeById: async (_, { eid }) => {
-      return await Employee.findById(eid);
+    findEmployeeById: async (_, { employeeId }) => {
+      return await Employee.findById(employeeId);
     },
   },
   Mutation: {
-    signup: async (_, { username, email, password }) => {
-      const user = new User({ username, email, password });
-      await user.save();
-      return user;
+    registerUser: async (_, { username, email, password }) => {
+      const newUser = new User({ username, email, password });
+      await newUser.save();
+      return newUser;
     },
-    login: async (_, { usernameOrEmail, password }) => {
+    loginUser: async (_, { usernameOrEmail, password }) => {
       const user = await User.findOne({
         $or: [{ username: usernameOrEmail }, { email: usernameOrEmail }],
         password,
       });
       return user;
     },
-    addNewEmployee: async (_, employeeData) => {
-      const employee = new Employee(employeeData);
-      await employee.save();
+    createNewEmployee: async (_, employeeData) => {
+      const newEmployee = new Employee(employeeData);
+      await newEmployee.save();
       return {
-        id: employee._id.toString(),
-        ...employee._doc,
+        id: newEmployee._id.toString(),
+        ...newEmployee._doc,
       };
     },
-    updateEmployeeById: async (_, { eid, ...updateData }) => {
-      return await Employee.findByIdAndUpdate(eid, updateData, { new: true });
+    modifyEmployeeById: async (_, { employeeId, ...updateData }) => {
+      return await Employee.findByIdAndUpdate(employeeId, updateData, { new: true });
     },
-    deleteEmployeeById: async (_, { eid }) => {
-      return await Employee.findByIdAndDelete(eid);
+    removeEmployeeById: async (_, { employeeId }) => {
+      return await Employee.findByIdAndDelete(employeeId);
     },
   },
 };

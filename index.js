@@ -2,31 +2,31 @@ const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const typeDefs = require('./src/graphql/schema');
 const resolvers = require('./src/graphql/resolvers');
-const connectDB = require('./src/utils/db');
+const connectToDatabase = require('./src/utils/db');
 const path = require('path');
 const employeeRoutes = require('./src/routes/employeeRoutes');
 
-connectDB();
+connectToDatabase();
 
 const app = express();
 
-const server = new ApolloServer({
+const graphqlServer = new ApolloServer({
   typeDefs,
   resolvers,
 });
 
-async function startServer() {
-  await server.start();
+async function launchServer() {
+  await graphqlServer.start();
 
-  server.applyMiddleware({ app });
+  graphqlServer.applyMiddleware({ app });
 
   app.use('/api', employeeRoutes);
 
   const PORT = process.env.PORT || 3000;
 
   app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}/graphql`);
+    console.log(`Server is up and running at http://localhost:${PORT}/graphql`);
   });
 }
 
-startServer();
+launchServer();

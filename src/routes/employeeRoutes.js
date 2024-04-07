@@ -3,34 +3,34 @@ const employeeController = require('../controllers/employeeController');
 
 const router = express.Router();
 
-router.get('/employees', async (req, res) => {
-  const employees = await employeeController.getAllEmployees();
-  res.json(employees);
+router.get('/employees', async (request, response) => {
+  const employees = await employeeController.fetchAllEmployees();
+  response.json(employees);
 });
 
-router.get('/employees/:eid', async (req, res) => {
-  const employee = await employeeController.getEmployeeById(req.params.eid);
-  res.json(employee);
+router.get('/employees/:employeeId', async (request, response) => {
+  const employee = await employeeController.fetchEmployeeById(request.params.employeeId);
+  response.json(employee);
 });
 
-router.post('/employees', async (req, res) => {
-  const newEmployee = await employeeController.createEmployee(req.body);
-  res.json(newEmployee);
+router.post('/employees', async (request, response) => {
+  const newEmployee = await employeeController.addEmployee(request.body);
+  response.json(newEmployee);
 });
 
-router.put('/employees/:eid', async (req, res) => {
-  const updatedEmployee = await employeeController.updateEmployeeById(
-    req.params.eid,
-    req.body
+router.put('/employees/:employeeId', async (request, response) => {
+  const updatedEmployee = await employeeController.modifyEmployeeById(
+    request.params.employeeId,
+    request.body
   );
-  res.json(updatedEmployee);
+  response.json(updatedEmployee);
 });
 
-router.delete('/employees/:eid', async (req, res) => {
-  const deletedEmployee = await employeeController.deleteEmployeeById(
-    req.params.eid
+router.delete('/employees/:employeeId', async (request, response) => {
+  const deletedEmployee = await employeeController.removeEmployeeById(
+    request.params.employeeId
   );
-  res.json(deletedEmployee);
+  response.json(deletedEmployee);
 });
 
 module.exports = router;

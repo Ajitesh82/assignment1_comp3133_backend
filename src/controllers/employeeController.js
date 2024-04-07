@@ -1,31 +1,31 @@
 const Employee = require('../models/Employee');
 
-const getAllEmployees = async () => {
+const fetchAllEmployees = async () => {
   return await Employee.find();
 };
 
-const getEmployeeById = async (eid) => {
-  return await Employee.findById(eid);
+const fetchEmployeeById = async (employeeId) => {
+  return await Employee.findById(employeeId);
 };
 
-const createEmployee = async (employeeData) => {
-  const employee = new Employee(employeeData);
-  await employee.save();
-  return employee;
+const addEmployee = async (employeeData) => {
+  const newEmployee = new Employee(employeeData);
+  await newEmployee.save();
+  return newEmployee;
 };
 
-const updateEmployeeById = async (eid, updateData) => {
-  return await Employee.findByIdAndUpdate(eid, updateData, { new: true });
+const modifyEmployeeById = async (employeeId, updateData) => {
+  return await Employee.findByIdAndUpdate(employeeId, updateData, { new: true });
 };
 
-const deleteEmployeeById = async (eid) => {
-  return await Employee.findByIdAndDelete(eid);
+const removeEmployeeById = async (employeeId) => {
+  return await Employee.findByIdAndDelete(employeeId);
 };
 
 module.exports = {
-  getAllEmployees,
-  getEmployeeById,
-  createEmployee,
-  updateEmployeeById,
-  deleteEmployeeById,
+  fetchAllEmployees,
+  fetchEmployeeById,
+  addEmployee,
+  modifyEmployeeById,
+  removeEmployeeById,
 };

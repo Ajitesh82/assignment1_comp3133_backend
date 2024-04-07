@@ -9,10 +9,10 @@ const employeeSchema = new mongoose.Schema({
 });
 
 employeeSchema.set('toJSON', {
-  transform: (doc, ret) => {
-    ret.id = ret._id.toString();
-    delete ret._id;
-    delete ret.__v;
+  transform: (document, result) => {
+    result.id = result._id.toString();
+    delete result._id;
+    delete result.__v;
   },
 });
 
