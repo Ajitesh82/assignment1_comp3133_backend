@@ -4,11 +4,8 @@ const Employee = require('../models/Employee');
 const resolvers = {
   Query: {
     fetchAllEmployees: async () => {
-      const employees = await Employee.find();
-      return employees.map(employee => ({
-        id: employee._id.toString(),
-        ...employee._doc,
-      }));
+      const employees = await Employee.find({});
+      return employees
     },
     findEmployeeById: async (_, { employeeId }) => {
       return await Employee.findById(employeeId);
