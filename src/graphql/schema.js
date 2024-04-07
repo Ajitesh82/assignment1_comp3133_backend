@@ -7,6 +7,7 @@ const typeDefs = gql`
   }
 
   type Employee {
+    _id:String!
     first_name: String!
     last_name: String!
     email: String!
@@ -23,7 +24,6 @@ const typeDefs = gql`
     registerUser(username: String!, email: String!, password: String!): User
     loginUser(usernameOrEmail: String!, password: String!): User
     createNewEmployee(
-      _id:String!
       first_name: String!
       last_name: String!
       email: String!
